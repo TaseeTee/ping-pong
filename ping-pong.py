@@ -1,4 +1,5 @@
 from pygame import *
+from time import sleep
 window = display.set_mode((700, 500))
 display.set_caption('Ping-pong')
 
@@ -35,8 +36,8 @@ speed_y = 2
 speed_x = 2
 c1 = 0
 c2 = 0
-player1 = PlayerSprite1('racket.png', 10, 250, 20, 100, 10)
-player2 = PlayerSprite2('racket.png', 670, 250, 20, 100, 10)
+player1 = PlayerSprite1('racket.png', 0, 250, 20, 100, 10)
+player2 = PlayerSprite2('racket.png', 680, 250, 20, 100, 10)
 ball = Ball('ball.png', 350, 250, 40, 40, 1)
 background = transform.scale(image.load('black.jpg'),(700,500))
 
@@ -58,8 +59,8 @@ while game:
     player1.update()
     player2.update()
 
-    text_end1 = font1.render("Игрок 1 победил!", 1, (255,255,255))
-    text_end2 = font1.render("Игрок 2 победил!", 1, (255,255,255))
+    text_end1 = font1.render("Player 1 won!", 1, (255,255,255))
+    text_end2 = font1.render("Player 2 won!", 1, (255,255,255))
     count1 = font2.render(str(c1), 1, (255,255,255))
     count2 = font2.render(str(c2), 1, (255,255,255))
     if sprite.collide_rect(player1, ball):
@@ -75,9 +76,11 @@ while game:
         speed_y *= -1
     if ball.rect.x <= 0:
         window.blit(text_end2, (50, 250))
+        sleep(5)
         game = False
     if ball.rect.x >= 700:
         window.blit(text_end1, (50, 250))
+        sleep(5)
         game = False
     for e in event.get():
         if e.type == QUIT:
