@@ -33,7 +33,8 @@ class Ball(GameSprite):
             self.rect.y += speed_y
 speed_y = 2
 speed_x = 2
-
+c1 = 0
+c2 = 0
 player1 = PlayerSprite1('racket.png', 10, 250, 20, 100, 10)
 player2 = PlayerSprite2('racket.png', 670, 250, 20, 100, 10)
 ball = Ball('ball.png', 350, 250, 40, 40, 1)
@@ -41,6 +42,7 @@ background = transform.scale(image.load('black.jpg'),(700,500))
 
 font.init()
 font1 = font.SysFont('Arial', 80)
+font2 = font.SysFont('Arial', 20)
 
 clock = time.Clock()
 FPS = 60
@@ -58,21 +60,29 @@ while game:
 
     text_end1 = font1.render("Игрок 1 победил!", 1, (255,255,255))
     text_end2 = font1.render("Игрок 2 победил!", 1, (255,255,255))
-
-    if sprite.collide_rect(player1, ball) or sprite.collide_rect(player2, ball):
+    count1 = font2.render(str(c1), 1, (255,255,255))
+    count2 = font2.render(str(c2), 1, (255,255,255))
+    if sprite.collide_rect(player1, ball):
         speed_x *= -1
         speed_y *= -1
+        c1 += 1
+    if sprite.collide_rect(player2, ball):
+        speed_x *= -1
+        speed_y *= -1
+        c2 += 1
+    
     if ball.rect.y > 460 or ball.rect.y < 40:
         speed_y *= -1
     if ball.rect.x <= 0:
         window.blit(text_end2, (50, 250))
-        #game = False
+        game = False
     if ball.rect.x >= 700:
         window.blit(text_end1, (50, 250))
-        #game = False
+        game = False
     for e in event.get():
         if e.type == QUIT:
             game = False
-
+    window.blit(count1, (100, 50))
+    window.blit(count2, (595, 50))
     display.update()    
     clock.tick(FPS)
