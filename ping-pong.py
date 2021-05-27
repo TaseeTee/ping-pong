@@ -76,11 +76,9 @@ while game:
         speed_y *= -1
     if ball.rect.x <= 0:
         window.blit(text_end2, (50, 250))
-        sleep(5)
         game = False
     if ball.rect.x >= 700:
         window.blit(text_end1, (50, 250))
-        sleep(5)
         game = False
     for e in event.get():
         if e.type == QUIT:
